@@ -6,6 +6,8 @@ const MODELS = [
   "claude-sonnet-4-6",
   "deepseek-chat",
   "deepseek-reasoner",
+  "qwen3.7-plus",
+  "glm-5.1",
 ];
 
 interface Panel {

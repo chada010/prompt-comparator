@@ -7,6 +7,12 @@ function getClient(model: string): OpenAI {
       apiKey: process.env.CLAUDE_API_KEY,
     });
   }
+  if (model.startsWith("qwen") || model.startsWith("glm-")) {
+    return new OpenAI({
+      baseURL: process.env.DASHSCOPE_BASE_URL,
+      apiKey: process.env.DASHSCOPE_API_KEY,
+    });
+  }
   return new OpenAI({
     baseURL: process.env.DEEPSEEK_BASE_URL,
     apiKey: process.env.DEEPSEEK_API_KEY,
