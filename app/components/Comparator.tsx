@@ -39,10 +39,15 @@ function OutputPanel({
         </select>
       </div>
       <div className="flex-1 overflow-y-auto p-4 font-mono text-sm whitespace-pre-wrap">
-        {panel.loading ? (
+        {panel.output ? (
+          <>
+            {panel.output}
+            {panel.loading && (
+              <span className="animate-pulse text-zinc-400">▌</span>
+            )}
+          </>
+        ) : panel.loading ? (
           <span className="text-zinc-400 animate-pulse">Generating…</span>
-        ) : panel.output ? (
-          panel.output
         ) : (
           <span className="text-zinc-400">Output will appear here.</span>
         )}
@@ -79,8 +84,58 @@ export default function Comparator() {
 
   async function handleRun() {
     if (!prompt.trim()) return;
-    // TODO: call API route and stream responses into each panel
+
     setPanels((prev) => prev.map((p) => ({ ...p, loading: true, output: "" })));
+
+    const snapshot = panels.map((p) => p.model);
+
+    await Promise.all(
+      snapshot.map(async (model, i) => {
+        try {
+          const res = await fetch("/api/run", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ model, prompt }),
+          });
+
+          if (!res.ok || !res.body) {
+            const err = await res.text();
+            setPanels((prev) =>
+              prev.map((p, j) =>
+                j === i ? { ...p, loading: false, output: `Error: ${err}` } : p
+              )
+            );
+            return;
+          }
+
+          const reader = res.body.getReader();
+          const decoder = new TextDecoder();
+
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            const chunk = decoder.decode(value, { stream: true });
+            setPanels((prev) =>
+              prev.map((p, j) =>
+                j === i ? { ...p, output: p.output + chunk } : p
+              )
+            );
+          }
+        } catch (err) {
+          setPanels((prev) =>
+            prev.map((p, j) =>
+              j === i
+                ? { ...p, output: `Error: ${err instanceof Error ? err.message : String(err)}` }
+                : p
+            )
+          );
+        } finally {
+          setPanels((prev) =>
+            prev.map((p, j) => (j === i ? { ...p, loading: false } : p))
+          );
+        }
+      })
+    );
   }
 
   return (
