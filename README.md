@@ -6,7 +6,7 @@ A side-by-side LLM prompt comparison tool. Send the same prompt to multiple mode
 
 - Compare up to 4 models at once
 - Streaming responses (tokens appear as they arrive)
-- Supports Claude, DeepSeek, Qwen, and GLM via OpenAI-compatible APIs
+- Supports GPT, DeepSeek, Qwen, and GLM via OpenAI-compatible APIs
 - Mobile-friendly responsive layout
 
 ## Tech Stack
@@ -40,8 +40,8 @@ cp env.example .env.local
 ```
 
 ```
-CLAUDE_BASE_URL=https://your-proxy/v1
-CLAUDE_API_KEY=your-key
+GPT_BASE_URL=https://your-proxy/v1
+GPT_API_KEY=your-key
 
 DEEPSEEK_BASE_URL=https://api.deepseek.com/v1
 DEEPSEEK_API_KEY=your-key
@@ -63,4 +63,5 @@ Open [http://localhost:3000](http://localhost:3000).
 - No conversation history — each run is a single-turn request
 - No system prompt input (planned)
 - API keys are provider-specific; the app does not support arbitrary OpenAI-compatible endpoints from the UI
-- `deepseek-reasoner` streaming may be slower due to chain-of-thought output
+- Deployed on Vercel Hobby plan; API calls time out after 10 seconds (affects long responses)
+- Public URL requires VPN in mainland China (`vercel.app` is blocked); custom domain binding failed due to DNS provider not supporting TXT records

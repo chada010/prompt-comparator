@@ -18,7 +18,7 @@ Single-page app with one API route:
 
 - `app/page.tsx` — shell: header + `<Comparator>`
 - `app/components/Comparator.tsx` — all UI state (`'use client'`). Manages panels array, streams responses from `/api/run` concurrently via `ReadableStream` / `getReader()`.
-- `app/api/run/route.ts` — POST handler. Routes to the correct OpenAI-compatible client based on model name prefix (`claude-` → Claude proxy, `qwen`/`glm-` → DashScope, default → DeepSeek). Returns a plain-text `ReadableStream`.
+- `app/api/run/route.ts` — POST handler. Routes to the correct OpenAI-compatible client based on model name prefix (`gpt-` → GPT proxy, `qwen`/`glm-` → DashScope, default → DeepSeek). Returns a plain-text `ReadableStream`.
 
 ## Provider routing
 
