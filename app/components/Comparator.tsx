@@ -25,7 +25,7 @@ function OutputPanel({
   onModelChange: (index: number, model: string) => void;
 }) {
   return (
-    <div className="flex flex-col flex-1 min-w-0">
+    <div className="flex flex-col flex-1 min-w-0 min-h-0">
       <div className="flex items-center gap-2 px-4 py-2 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 shrink-0">
         <select
           value={panel.model}
