@@ -26,7 +26,7 @@ function OutputPanel({
   onModelChange: (index: number, model: string) => void;
 }) {
   return (
-    <div className="flex flex-col flex-1 min-w-0 border-r last:border-r-0 border-zinc-200 dark:border-zinc-800">
+    <div className="flex flex-col flex-1 min-w-0">
       <div className="flex items-center gap-2 px-4 py-2 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 shrink-0">
         <select
           value={panel.model}
@@ -142,9 +142,9 @@ export default function Comparator() {
 
   return (
     <div className="flex flex-col flex-1 min-h-0">
-      <div className="flex flex-1 min-h-0 divide-x divide-zinc-200 dark:divide-zinc-800">
+      <div className="flex flex-col md:flex-row flex-1 min-h-0 overflow-y-auto md:overflow-hidden divide-y md:divide-y-0 md:divide-x divide-zinc-200 dark:divide-zinc-800">
         {panels.map((panel, i) => (
-          <div key={i} className="flex flex-col flex-1 min-w-0 relative">
+          <div key={i} className="flex flex-col min-h-52 md:min-h-0 md:flex-1 relative">
             {panels.length > 2 && (
               <button
                 onClick={() => removePanel(i)}
@@ -159,7 +159,7 @@ export default function Comparator() {
         ))}
       </div>
 
-      <div className="shrink-0 border-t border-zinc-200 dark:border-zinc-800 p-4 flex gap-3 items-end bg-background">
+      <div className="shrink-0 border-t border-zinc-200 dark:border-zinc-800 p-3 flex flex-col sm:flex-row gap-2 sm:items-end bg-background">
         <textarea
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
@@ -170,7 +170,7 @@ export default function Comparator() {
           rows={3}
           className="flex-1 resize-none rounded border border-zinc-300 dark:border-zinc-700 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-zinc-400 font-mono"
         />
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-row sm:flex-col gap-2 justify-end">
           <button
             onClick={handleRun}
             disabled={!prompt.trim() || panels.some((p) => p.loading)}
