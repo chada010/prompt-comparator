@@ -142,9 +142,9 @@ export default function Comparator() {
 
   return (
     <div className="flex flex-col flex-1 min-h-0">
-      <div className="flex flex-col md:flex-row flex-1 min-h-0 overflow-y-auto md:overflow-hidden divide-y md:divide-y-0 md:divide-x divide-zinc-200 dark:divide-zinc-800">
+      <div className="flex flex-col md:flex-row flex-1 min-h-0 divide-y md:divide-y-0 md:divide-x divide-zinc-200 dark:divide-zinc-800">
         {panels.map((panel, i) => (
-          <div key={i} className="flex flex-col min-h-52 md:min-h-0 md:flex-1 relative">
+          <div key={i} className="flex flex-col flex-1 min-h-0 relative">
             {panels.length > 2 && (
               <button
                 onClick={() => removePanel(i)}
