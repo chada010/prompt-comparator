@@ -1,10 +1,10 @@
 import OpenAI from "openai";
 
 function getClient(model: string): OpenAI {
-  if (model.startsWith("claude-")) {
+  if (model.startsWith("gpt-")) {
     return new OpenAI({
-      baseURL: process.env.CLAUDE_BASE_URL,
-      apiKey: process.env.CLAUDE_API_KEY,
+      baseURL: process.env.GPT_BASE_URL,
+      apiKey: process.env.GPT_API_KEY,
     });
   }
   if (model.startsWith("qwen") || model.startsWith("glm-")) {

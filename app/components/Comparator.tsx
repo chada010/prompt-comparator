@@ -3,9 +3,8 @@
 import { useState } from "react";
 
 const MODELS = [
-  "claude-sonnet-4-6",
-  "deepseek-chat",
-  "deepseek-reasoner",
+  "gpt-5.4",
+  "deepseek-v4-flash",
   "qwen3.7-plus",
   "glm-5.1",
 ];
