@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import CopyButton from "./CopyButton";
 
 const MODELS = [
   "gpt-5.4",
@@ -10,6 +11,7 @@ const MODELS = [
 ];
 
 interface Panel {
+  id: number;
   model: string;
   output: string;
   loading: boolean;
@@ -38,6 +40,7 @@ function OutputPanel({
             </option>
           ))}
         </select>
+        <CopyButton text={panel.output} />
       </div>
       <div className="flex-1 min-h-0 overflow-y-auto p-4 font-mono text-sm whitespace-pre-wrap break-words">
         {panel.output ? (
@@ -58,9 +61,10 @@ function OutputPanel({
 }
 
 export default function Comparator() {
+  const nextPanelId = useRef(2);
   const [panels, setPanels] = useState<Panel[]>([
-    { model: MODELS[0], output: "", loading: false },
-    { model: MODELS[1], output: "", loading: false },
+    { id: 0, model: MODELS[0], output: "", loading: false },
+    { id: 1, model: MODELS[1], output: "", loading: false },
   ]);
   const [prompt, setPrompt] = useState("");
 
@@ -74,7 +78,7 @@ export default function Comparator() {
     if (panels.length >= 4) return;
     setPanels((prev) => [
       ...prev,
-      { model: MODELS[0], output: "", loading: false },
+      { id: nextPanelId.current++, model: MODELS[0], output: "", loading: false },
     ]);
   }
 
@@ -143,7 +147,7 @@ export default function Comparator() {
     <div className="flex flex-col flex-1 min-h-0">
       <div className="flex flex-col md:flex-row flex-1 min-h-0 divide-y md:divide-y-0 md:divide-x divide-zinc-200 dark:divide-zinc-800">
         {panels.map((panel, i) => (
-          <div key={i} className="flex flex-col flex-1 min-h-0 relative">
+          <div key={panel.id} className="flex flex-col flex-1 min-h-0 relative">
             {panels.length > 2 && (
               <button
                 onClick={() => removePanel(i)}
