@@ -9,6 +9,10 @@ A side-by-side LLM prompt comparison tool. Send the same prompt to multiple mode
 - Supports GPT, DeepSeek, Qwen, and GLM via OpenAI-compatible APIs
 - Mobile-friendly responsive layout
 
+## Git Collaboration Practice
+
+This repository includes a small GitHub pull request workflow practice.
+
 ## Tech Stack
 
 - [Next.js 16](https://nextjs.org/) (App Router)
