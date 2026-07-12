@@ -67,6 +67,7 @@ export default function Comparator() {
     { id: 1, model: MODELS[1], output: "", loading: false },
   ]);
   const [prompt, setPrompt] = useState("");
+  const [systemPrompt, setSystemPrompt] = useState("");
 
   function handleModelChange(index: number, model: string) {
     setPanels((prev) =>
@@ -100,7 +101,7 @@ export default function Comparator() {
           const res = await fetch("/api/run", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ model, prompt }),
+            body: JSON.stringify({ model, prompt, systemPrompt }),
           });
 
           if (!res.ok || !res.body) {
@@ -160,6 +161,16 @@ export default function Comparator() {
             <OutputPanel panel={panel} index={i} onModelChange={handleModelChange} />
           </div>
         ))}
+      </div>
+
+      <div className="shrink-0 border-t border-zinc-200 dark:border-zinc-800 px-3 pt-3">
+        <textarea
+          value={systemPrompt}
+          onChange={(e) => setSystemPrompt(e.target.value)}
+          placeholder="System prompt… (为模型设定身份，可留空)"
+          rows={2}
+          className="w-full resize-none rounded border border-zinc-300 dark:border-zinc-700 bg-transparent px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-zinc-400 font-mono"
+        />
       </div>
 
       <div className="shrink-0 border-t border-zinc-200 dark:border-zinc-800 p-3 flex flex-col sm:flex-row gap-2 sm:items-end bg-background">
